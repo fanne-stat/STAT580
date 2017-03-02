@@ -1,0 +1,115 @@
+---
+title: "STAT 580 HW2 "
+author: "Haozhe Zhang"
+date: "February 16, 2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+
+```{c, eval = FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+#include <stdio.h>
+#include <math.h>
+
+#define P0 0.01 /* lower limit of the probability (p) */
+#define P1 0.5 /* upper limit of the probability (p) */
+#define PLEN 10 /* number of columns */
+#define N 5 /* number of experiments (n) */
+
+int factorial(int n){
+	if(n==0) return(1);
+	//if(n<0) return(EOF);
+	if(n>1){
+		return(n*factorial(n-1));
+	}
+	else{
+		return(n);
+	}
+}
+
+int main(){
+	int x=0, i=0;
+	double prob, density_value;
+
+	printf("%s\t", "x\\p");
+	
+	for(i=0;i<PLEN;i++){
+		prob = P0+i*(P1-P0)/(PLEN-1);
+		printf("%5.4f  ", prob);
+	}
+	printf("%s","\n");
+
+	for(x=0;x<N+1;x++){
+		printf("%d  \t",x);
+		for(i=0;i<PLEN;i++){
+		        prob = P0+i*(P1-P0)/(PLEN-1);
+			density_value = factorial(N)/(factorial(x)*factorial(N-x))*pow(prob,x)*pow(1-prob,N-x);
+			printf("%5.4f  ", density_value);
+		}
+		printf("%s","\n");
+	}
+	return 0;
+```
+
+## Question 2
+### (a) Algorithm:
+1. Generate a sample U from unif(0,1);
+2. Compute X=10^U, where X is a random sample from f(x).
+
+### (b) C program
+```{c, eval=FALSE}
+#include <stdio.h>
+#include <time.h>
+#include <Rmath.h>
+
+int main(void){
+	set_seed(time(NULL), 19921129);
+	printf("%f\n", pow(10,unif_rand()));
+	return(0);
+```
+### (c) R program
+```{r,fig.width=4, fig.height=3.5, warning=FALSE,tidy=TRUE, tidy.opts=list(width.cutoff=60),message=FALSE}
+N = 5000
+plot(density(10^(runif(N,0,1)), from=0, to=10), main="")
+```
+
+## Question 3
+### (a) Generate 5000 samples from $g_{1}(x)$ and $g_{2}(x)$
+```{r,fig.width=4, fig.height=3.5, warning=FALSE,tidy=TRUE, tidy.opts=list(width.cutoff=60),message=FALSE}
+plot(density(rgamma(N,1,1), from=0, to=5), main = "g1(x)")
+plot(density(abs(rcauchy(N,0,1)), from=0, to=5), main = "g2(x)")
+```
+
+Generate samples from f(x) using rejection sampling with g_{1}(x)
+```{r,fig.width=4, fig.height=3.5, warning=FALSE,tidy=TRUE, tidy.opts=list(width.cutoff=60),message=FALSE}
+f_g1_sample <- rep(NA,N)
+n <- 1
+while(n<=N){
+  gamma_sample <- rgamma(1,1,1)
+  if(runif(1,0,1)<=1/(1+gamma_sample^2)){
+    f_g1_sample[n] <- gamma_sample
+    n <- n + 1
+  }
+}
+plot(density(f_g1_sample,from=0, to=5), main="")
+```
+
+Generate samples from $f(x)$ using rejection sampling with $g_{2}(x)$
+```{r,fig.width=4, fig.height=3.5, warning=FALSE,tidy=TRUE, tidy.opts=list(width.cutoff=60),message=FALSE}
+f_g2_sample <- rep(NA,N)
+n <- 1
+while(n<=N){
+  cauchy_sample <- abs(rcauchy(1,0,1))
+  if(runif(1,0,1)<=exp(-cauchy_sample)){
+    f_g2_sample[n] <- cauchy_sample
+    n <- n + 1
+  }
+}
+plot(density(f_g2_sample,from=0, to=5), main="")
+```
+
+## (c) 

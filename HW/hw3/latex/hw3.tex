@@ -76,51 +76,73 @@
 %	NAME AND CLASS SECTION
 %----------------------------------------------------------------------------------------
 
-\newcommand{\hmwkTitle}{Homework 1} % Assignment title
+\newcommand{\hmwkTitle}{Homework 3} % Assignment title
 \newcommand{\hmwkDueDate}{\date} % Due date
 \newcommand{\hmwkClass}{STAT\ 580} % Course/class
 \newcommand{\hmwkAuthorName}{Haozhe Zhang} % Your name
-\usepackage{xcolor}
+
 %----------------------------------------------------------------------------------------
 
 \begin{document}
 
 \begin{homeworkProblem}
-	\noindent \textbf{Code:}
-	\lstinputlisting[language=C]{../Question1.c}
-	\noindent \textbf{Output:}
-	\lstinputlisting[language=C]{../Output1.c
-	}
+	(a)
+	\begin{eqnarray*}
+	P(U\leq r(x))&=& E(I(U\leq r(x)))= E(E(I(U\leq r(x))|x)) = E(r(x))\\
+	&=& \int \frac{q(x)}{\alpha g(x)}g(x)dx = \frac{1}{\alpha}\int q(x)dx
+	\end{eqnarray*}
+	
+	(b)
+	\begin{eqnarray*}
+   P(x \in A, U\leq r(x)) &=& E(I(U\leq r(x))I(x\in A))=E(r(x)I(x\in A))\\
+   &=& \int_{A} \frac{q(x)}{\alpha g(x)}g(x)dx = \frac{1}{\alpha}\int_{A} q(x)dx
+	\end{eqnarray*}
+	
+	\begin{eqnarray*}
+ P(Y\in A) = P(x \in A |U\leq r(x)) = \frac{P(x \in A, U\leq r(x)) }{P(U\leq r(x))}= \int_{A}\frac{q(x)}{\int q(x)dx}dx
+	\end{eqnarray*}
 \end{homeworkProblem}
 
 \begin{homeworkProblem}
-	\noindent \textbf{Code:}
-	\lstinputlisting[language=C]{../Question2.c}
-		\noindent \textbf{Output:}
-		\lstinputlisting[language=C]{../Output2.c
-		}
+	(a)
+	\begin{equation}
+		\int (2x^{\theta-1}e^{-x} + x^{\theta -1/2}e^{-x})dx = 2\Gamma(\theta) + \Gamma(\theta+\frac{1}{2})
+	\end{equation}
+	(b)
+	\begin{eqnarray*}
+	 g(x) &=& \omega_{1}g_{1}(x) + \omega_{2}g_{2}(x)\\
+	 &=& \frac{2\Gamma(\theta)}{2\Gamma(\theta) + \Gamma(\theta+\frac{1}{2})} \left(\frac{1}{\Gamma(\theta)}x^{\theta-1}e^{-x}\right) + \frac{\Gamma(\theta+\frac{1}{2})}{2\Gamma(\theta) + \Gamma(\theta+\frac{1}{2})}
+	 \left(\frac{1}{\Gamma(\theta+1/2)}x^{\theta-1/2}e^{-x}\right) 
+	\end{eqnarray*}
+	(c)
+	Algorithm:
+	\begin{enumerate}
+		\item Sample $U \sim Ber\left(\frac{2\Gamma(\theta)}{2\Gamma(\theta) + \Gamma(\theta+\frac{1}{2})}\right)$;
+		\item If $U=1$, sample $X \sim Gamma(1,\theta)$; if $U=0$, sample $X \sim Gamma(1,\theta+1/2)$. Then, $X$ is a sample from $g(x)$.
+	\end{enumerate}
+	(d) It can be shown that $f(x)\leq g(x)$ for $x>0$.\\
+	Algorithm:
+	\begin{enumerate}
+		\item Sample $X \sim g(x)$ and $U \sim Unif(0,1)$ independently;
+		\item If $U > \frac{f(x)}{g(x)}$, then go to Step 1; otherwise, return $X$. The returned value is a random variable from $f(x)$.
+	\end{enumerate}
+	
 \end{homeworkProblem}
 
 \begin{homeworkProblem}
-		\noindent \textbf{Code:}
-	\lstinputlisting[language=C]{../Question3.c}
-		\noindent \textbf{Output:}
-		\lstinputlisting[language=C]{../Output3.c
-		}
+	\noindent \textbf{C code:}
+	\lstinputlisting[language=C]{../hw3_3.c}
 \end{homeworkProblem}
 
 \begin{homeworkProblem}
-		\noindent \textbf{Code:}
-	\lstinputlisting[language=R, breaklines=true]{../Question4.c}
-		\noindent \textbf{Output:}
-		\lstinputlisting[language=C]{../Output4.c
-		}
+	\noindent \textbf{C code:}
+	\lstinputlisting[language=C]{../hw3_4.c}
 \end{homeworkProblem}
 
+
 \begin{homeworkProblem}
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=0.12,angle=270]{../Question5.JPG}
-\end{figure}
+	\noindent \textbf{C code:}
+	\lstinputlisting[language=C]{../hw3_5.c}
 \end{homeworkProblem}
+
 \end{document}

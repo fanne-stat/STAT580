@@ -1,0 +1,8 @@
+#include <stdio.h>
+#include <Rmath.h>
+
+int main(void){
+	printf("%f\n", pow(10,unif_rand()));
+	return(0);
+}
+
