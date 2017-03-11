@@ -1,9 +1,11 @@
 #include<stdio.h>
 
-void dgesv_(int *n, int *NRHS, double *A, int *LDA, int *IPIV, double *B, int *LDB, int *INFO);
+void dgesv_(int *n, int *NRHS, double *A, int *LDA, 
+		int *IPIV, double *B, int *LDB, int *INFO);
 
-void dgemm_(char *TRANSA, char *TRANSB, int *M, int *n, int *K, double *ALPHA, double *A,
-	int *LDA, double *B, int *LDB, double *BETA, double *C, int *LDC);
+void dgemm_(char *TRANSA, char *TRANSB, int *M, int *n, int *K,
+	       	double *ALPHA, double *A, int *LDA, double *B,
+	       	int *LDB, double *BETA, double *C, int *LDC);
 
 int main(int argc, char *argv[]){
         FILE *fp;
@@ -50,8 +52,10 @@ int main(int argc, char *argv[]){
 		}
 	}
 
-	dgemm_(&TRANSA, &TRANSB, &n2, &n2, &n1, &alpha, x, &n2, xt, &n1, &beta,Design_Mat,&n2);
-	dgemm_(&TRANSA, &TRANSB, &n2, &n3, &n1, &alpha, x, &n2, Y, &n1, &beta,coef,&n2);
+	dgemm_(&TRANSA, &TRANSB, &n2, &n2, &n1, &alpha, 
+			x, &n2, xt, &n1, &beta,Design_Mat,&n2);
+	dgemm_(&TRANSA, &TRANSB, &n2, &n3, &n1, &alpha, 
+			x, &n2, Y, &n1, &beta,coef,&n2);
 	dgesv_(&n2,&n3, Design_Mat,&n2,ipiv,coef,&n2,&info);
 
 	printf("The regression coefficients: ");

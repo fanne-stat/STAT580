@@ -1,0 +1,150 @@
+
+\documentclass[12pt]{article}
+
+\usepackage{fancyhdr} % Required for custom headers
+\usepackage{lastpage} % Required to determine the last page for the footer
+\usepackage{extramarks} % Required for headers and footers
+\usepackage{graphicx} % Required to insert images
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{listings}
+%\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+% Margins
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in 
+\linespread{1.1} % Line spacing
+% Set up the header and footer
+\pagestyle{fancy}
+\lhead{\hmwkAuthorName} % Top left header
+\chead{\hmwkClass\ : \hmwkTitle} % Top center header
+\rhead{\firstxmark} % Top right header
+\lfoot{\lastxmark} % Bottom left footer
+\cfoot{} % Bottom center footer
+\rfoot{Page\ \thepage\ of\ \pageref{LastPage}} % Bottom right footer
+\renewcommand\headrulewidth{0.4pt} % Size of the header rule
+\renewcommand\footrulewidth{0.4pt} % Size of the footer rule
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT STRUCTURE COMMANDS
+%----------------------------------------------------------------------------------------
+
+% Header and footer for when a page split occurs within a problem environment
+\newcommand{\enterProblemHeader}[1]{
+\nobreak\extramarks{#1}{#1 continued on next page\ldots}\nobreak
+\nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
+}
+
+% Header and footer for when a page split occurs between problem environments
+\newcommand{\exitProblemHeader}[1]{
+\nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
+\nobreak\extramarks{#1}{}\nobreak
+}
+
+\setcounter{secnumdepth}{0} % Removes default section numbers
+\newcounter{homeworkProblemCounter} % Creates a counter to keep track of the number of problems
+
+\newcommand{\homeworkProblemName}{}
+\newenvironment{homeworkProblem}[1][Problem \arabic{homeworkProblemCounter}]{ % Makes a new environment called homeworkProblem which takes 1 argument (custom name) but the default is "Problem #"
+\stepcounter{homeworkProblemCounter} % Increase counter for number of problems
+\renewcommand{\homeworkProblemName}{#1} % Assign \homeworkProblemName the name of the problem
+\section{\homeworkProblemName} % Make a section in the document with the custom problem count
+\enterProblemHeader{\homeworkProblemName} % Header and footer within the environment
+}{
+\exitProblemHeader{\homeworkProblemName} % Header and footer after the environment
+}
+
+\newcommand{\problemAnswer}[1]{ % Defines the problem answer command with the content as the only argument
+\noindent\framebox[\columnwidth][c]{\begin{minipage}{0.98\columnwidth}#1\end{minipage}} % Makes the box around the problem answer and puts the content inside
+}
+
+\newcommand{\homeworkSectionName}{}
+\newenvironment{homeworkSection}[1]{ % New environment for sections within homework problems, takes 1 argument - the name of the section
+\renewcommand{\homeworkSectionName}{#1} % Assign \homeworkSectionName to the name of the section from the environment argument
+\subsection{\homeworkSectionName} % Make a subsection with the custom name of the subsection
+\enterProblemHeader{\homeworkProblemName\ [\homeworkSectionName]} % Header and footer within the environment
+}{
+\enterProblemHeader{\homeworkProblemName} % Header and footer after the environment
+}
+   
+%----------------------------------------------------------------------------------------
+%	NAME AND CLASS SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\hmwkTitle}{Homework 4} % Assignment title
+\newcommand{\hmwkDueDate}{\date} % Due date
+\newcommand{\hmwkClass}{STAT\ 580} % Course/class
+\newcommand{\hmwkAuthorName}{Haozhe Zhang} % Your name
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+
+	\begin{homeworkProblem}
+		\noindent \textbf{C code:}
+		\lstinputlisting[language=C]{../hw4_1.c}
+	\end{homeworkProblem}
+
+
+\begin{homeworkProblem}
+	(a)
+	\begin{eqnarray*}
+    \int_{0}^{\infty}(x^{2}+5)xe^{-x}dx \approx 10.99763 \pm 0.2028816
+	\end{eqnarray*}
+	
+	(b)
+	\begin{eqnarray*}
+		\int_{0}^{1}\int_{-\infty}^{\infty}e^{-x^{2}}\cos(xy)dxdy \approx 1.634335
+	\end{eqnarray*}
+	
+	(c)
+	\begin{eqnarray*}
+		\int_{0}^{\infty}\frac{3}{4}x^{4}e^{-x^{3}/4}dx \approx 2.271137 \pm 0.00957
+	\end{eqnarray*}
+	\noindent \textbf{R code:}
+	\lstinputlisting[language=R]{../hw4_2.R}
+\end{homeworkProblem}
+
+
+\begin{homeworkProblem}
+	\begin{itemize}
+		\item $\nu=0.1$: $I \approx 0.185114 \pm 0.07967168$;
+		\item $\nu=1$: $I \approx 0.1363114 \pm 0.00121565$;
+		\item $\nu=10$: $I \approx 0.1386195 \pm 0.004512526$.
+	\end{itemize}
+
+	\noindent \textbf{R code:}
+	\lstinputlisting[language=R]{../hw4_3.R}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+	(a)
+$\hat{I} =  0.6977335$
+	
+	(b)
+$E\{c(U)\} = 1.5$. The optimal value of $b = -0.4779221$. $\hat{I}_{CV} = 0.6927941$.
+	
+	(c)
+	$$\widehat{var}(\hat{I}_{MC}) = 1.295893\times 10^{-5} > \widehat{var}(\hat{I}_{CV}) = 4.006056\times 10^{-7} $$
+	(d) We define a new function $c_{1}(x)=\sqrt{1+x}$. The new estimator is denoted by
+	\begin{eqnarray*}
+	\hat{I}_{new} = \frac{1}{n}\sum_{i=1}^{n}h(U_{i}) - b\left[\frac{1}{n}\sum_{i=1}^{n}c_{1}(U_{i})-E\{c_{1}(U)\}\right].
+	\end{eqnarray*}
+The variance of $\hat{I}_{new}$ is smaller than the variance of $ \hat{I}_{CV}$ because
+
+\begin{eqnarray*}
+\left|\mathrm{Corr}\left(\frac{1}{1+x}, \sqrt{1+x}\right)\right| &=& \frac{E\frac{1}{\sqrt{1+x}}-E\frac{1}{1+x}E\sqrt{1+x}}{\sqrt{var(\frac{1}{1+x})var(\sqrt{1+x})}}=0.990998\\
+\left|\mathrm{Corr}\left(\frac{1}{1+x}, 1+x\right)\right| &=& \frac{E1-E\frac{1}{1+x}E(1+x)}{\sqrt{var(\frac{1}{1+x})var(1+x)}}=0.9841661 < 0.990998
+\end{eqnarray*}
+	
+	
+	\noindent \textbf{R code:}
+	\lstinputlisting[language=R]{../hw4_4.R}
+\end{homeworkProblem}
+\end{document}
